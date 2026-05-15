@@ -1,0 +1,39 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Laptop Pro 15",
+      "precio": 24999.99,
+      "categoria": "electronica",
+      "stock": 12
+    },
+    {
+      "id": 2,
+      "nombre": "Teclado inalambrico",
+      "precio": 2500,
+      "categoria": "perifericos",
+      "stock": 50
+    },
+    {
+      "id": 3,
+      "nombre": "Monitor 4K 27",
+      "precio": 8500,
+      "categoria": "monitores",
+      "stock": 8
+    },
+    {
+      "id": 4,
+      "nombre": "Mouse Inalámbrico",
+      "precio": 650.5,
+      "categoria": "perifericos",
+      "stock": 60
+    },
+    {
+      "id": 5,
+      "nombre": "Auriculares Noise Cancel",
+      "precio": 3200,
+      "categoria": "audio",
+      "stock": 20
+    }
+  ]
+}
