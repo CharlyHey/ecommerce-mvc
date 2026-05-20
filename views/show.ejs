@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <%- include('partials/head') %>
+    <title>
+      <%= producto.nombre %>
+    </title>
+</head>
+
+<body>
+
+  <%- include('partials/navbar') %>
+
+    <div class="container">
+      <h1 class="page-title">Detalle del Producto</h1>
+
+      <div class="detail-card">
+        <div class="detail-header">
+          <div>
+            <div class="detail-title">
+              <%= producto.nombre %>
+            </div>
+            <div class="detail-id">ID #<%= producto.id %>
+            </div>
+          </div>
+          <span class="badge <%= producto.categoria %>">
+            <%= producto.categoria %>
+          </span>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-field">
+            <label>Precio</label>
+            <span class="price">$<%= producto.precio?.toLocaleString('es-MX') %></span>
+          </div>
+          <div class="detail-field">
+            <label>Stock disponible</label>
+            <span class="<%= producto.stock < 10 ? 'stock-low' : '' %>">
+              <%= producto.stock %> unidades
+            </span>
+          </div>
+          <div class="detail-field">
+            <label>Categoría</label>
+            <span>
+              <%= producto.categoria %>
+            </span>
+          </div>
+          <div class="detail-field">
+            <label>Estado</label>
+            <span>
+              <%= producto.stock> 0 ? '✅ En stock' : '❌ Agotado' %>
+            </span>
+          </div>
+        </div>
+
+        <div class="detail-actions">
+          <a href="/api/productos/<%= producto.id %>/editar" class="btn btn-edit">✏️ Editar</a>
+          <form action="/api/productos/<%= producto.id %>?_method=DELETE" method="POST"
+            onsubmit="return confirm('¿Eliminar este producto?')">
+            <button type="submit" class="btn btn-delete">🗑️ Eliminar</button>
+          </form>
+          <a href="/api/productos" class="btn btn-secondary">← Volver</a>
+        </div>
+      </div>
+    </div>
+
+</body>
+
+</html>

@@ -4,6 +4,7 @@
   "description": "El mejor proyecto web",
   "main": "app.js",
   "scripts": {
+    "start": "node --watch app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +12,8 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "express": "^5.2.1"
+    "ejs": "5.0.2",
+    "express": "5.2.1",
+    "method-override": "3.0.0"
   }
 }
