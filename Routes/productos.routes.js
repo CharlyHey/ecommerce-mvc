@@ -1,25 +1,63 @@
-import { productoController } from '../Controllers/productos.controller.js'
-import { Router } from 'express'
+import { Router } from 'express';
 
-const router = Router()
+import { productoController }
+from '../Controllers/productos.controller.js';
 
-// ── Vistas ─────────────────────────────────────────
-router.get('/', productoController.getAll)   // Listado
-router.get('/nuevo', productoController.nuevo)    // Formulario crear
-router.get('/:id', productoController.getById)  // Detalle
-router.get('/:id/editar', productoController.editar)   // Formulario editar
+import { upload }
+from '../Middlewares/upload.js';
 
-// ── Operaciones (con method-override) ─────────────
-router.post('/', productoController.create)   // Crear
-router.put('/:id', productoController.update)   // Actualizar
-router.delete('/:id', productoController.delete)   // Eliminar
+const router = Router();
 
-/*
-Estas sentencias iban antes de incorporar vistas
-router.get('/', productoController.getAll)
-router.get('/:id', productoController.getById)
-router.post('/', productoController.create)
-router.put('/:id', productoController.update)
-router.delete('/:id', productoController.delete)*/
+// ─────────────────────────────────────
+// VISTAS
+// ─────────────────────────────────────
 
-export default router
+// Catálogo
+router.get(
+  '/',
+  productoController.getAll
+);
+
+// Formulario crear
+router.get(
+  '/nuevo',
+  productoController.nuevo
+);
+
+// Detalle producto
+router.get(
+  '/:id',
+  productoController.getById
+);
+
+// Formulario editar
+router.get(
+  '/:id/editar',
+  productoController.editar
+);
+
+// ─────────────────────────────────────
+// CRUD PRODUCTOS
+// ─────────────────────────────────────
+
+// Crear producto
+router.post(
+  '/',
+  upload.single('imagen'),
+  productoController.create
+);
+
+// Actualizar producto
+router.put(
+  '/:id',
+  upload.single('imagen'),
+  productoController.update
+);
+
+// Eliminar producto
+router.delete(
+  '/:id',
+  productoController.delete
+);
+
+export default router;

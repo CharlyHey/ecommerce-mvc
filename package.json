@@ -1,19 +1,27 @@
 {
-  "name": "pruebamvc",
+  "name": "ecommerce-mvc",
   "version": "1.0.0",
-  "description": "El mejor proyecto web",
+  "description": "Proyecto del equipo 2 de desarrollo web 2651",
   "main": "app.js",
   "scripts": {
     "start": "node --watch app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "Jonathan Córdoba",
-  "license": "ISC",
+  "keywords": [
+    "node.js",
+    "express",
+    "mvc",
+    "ecommerce"
+  ],
+  "author": "Buitron Arreola Juan Carlos",
+  "license": "MIT",
   "type": "module",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "ejs": "5.0.2",
     "express": "5.2.1",
-    "method-override": "3.0.0"
+    "express-session": "^1.19.0",
+    "method-override": "3.0.0",
+    "multer": "^2.1.1"
   }
 }

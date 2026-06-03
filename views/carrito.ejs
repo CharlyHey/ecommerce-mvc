@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <%- include('partials/head') %>
+
+  <title>
+    Carrito de Compras
+  </title>
+
+</head>
+
+<body>
+
+  <%- include('partials/navbar') %>
+
+  <div class="container">
+
+    <h1 class="page-title">
+      🛒 Carrito de Compras
+    </h1>
+
+    <!-- Carrito vacío -->
+
+    <% if (carrito.length === 0) { %>
+
+      <div class="card">
+
+        <p>
+          Tu carrito está vacío.
+        </p>
+
+        <br>
+
+        <a
+          href="/api/productos"
+          class="btn btn-primary"
+        >
+
+          Ver productos
+
+        </a>
+
+      </div>
+
+    <% } else { %>
+
+      <!-- Productos -->
+
+      <div class="products-grid">
+
+        <% carrito.forEach(item => { %>
+
+          <div class="product-card">
+
+            <!-- Imagen -->
+
+            <div class="product-image">
+
+              <% if (item.imagen) { %>
+
+                <img
+                  src="<%= item.imagen %>"
+                  alt="<%= item.nombre %>"
+                >
+
+              <% } else { %>
+
+                <img
+                  src="https://via.placeholder.com/300x200"
+                  alt="Sin imagen"
+                >
+
+              <% } %>
+
+            </div>
+
+            <!-- Información -->
+
+            <div class="product-info">
+
+              <h2>
+                <%= item.nombre %>
+              </h2>
+
+              <p class="product-price">
+
+                $
+                <%= item.precio.toLocaleString('es-MX') %>
+
+              </p>
+
+              <p class="product-stock">
+
+                Cantidad:
+                <strong>
+                  <%= item.cantidad %>
+                </strong>
+
+              </p>
+
+              <p class="product-stock">
+
+                Subtotal:
+                <strong>
+
+                  $
+                  <%= (
+                    item.precio * item.cantidad
+                  ).toLocaleString('es-MX') %>
+
+                </strong>
+
+              </p>
+
+              <!-- Eliminar -->
+
+              <form
+                action="/carrito/eliminar/<%= item.id %>"
+                method="POST"
+              >
+
+                <button
+                  type="submit"
+                  class="btn btn-delete"
+                >
+
+                  🗑️ Eliminar
+
+                </button>
+
+              </form>
+
+            </div>
+
+          </div>
+
+        <% }) %>
+
+      </div>
+
+      <!-- Total -->
+
+      <div
+        class="card"
+        style="margin-top: 30px;"
+      >
+
+        <h2
+          style="
+            margin-bottom: 20px;
+          "
+        >
+
+          Total:
+          <span class="product-price">
+
+            $
+            <%= total.toLocaleString('es-MX') %>
+
+          </span>
+
+        </h2>
+
+        <div class="actions">
+
+          <a
+            href="/api/productos"
+            class="btn btn-secondary"
+          >
+
+            ← Seguir comprando
+
+          </a>
+
+          <form
+            action="/carrito/checkout"
+            method="POST"
+          >
+
+            <button
+              type="submit"
+              class="btn btn-success"
+            >
+
+              ✅ Finalizar compra
+
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    <% } %>
+
+  </div>
+
+</body>
+
+</html>

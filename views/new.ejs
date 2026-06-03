@@ -2,64 +2,207 @@
 <html lang="es">
 
 <head>
+
   <%- include('partials/head') %>
-    <title>Nuevo Producto</title>
+
+  <title>Nuevo Producto</title>
+
 </head>
 
 <body>
 
   <%- include('partials/navbar') %>
 
-    <div class="container">
-      <h1 class="page-title">Nuevo Producto</h1>
+  <div class="container">
 
-      <% if (typeof error !=='undefined' ) { %>
-        <div class="alert alert-error">
-          <%= error %>
+    <h1 class="page-title">
+      Nuevo Producto
+    </h1>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+
+      <div class="alert alert-error">
+        <%= error %>
+      </div>
+
+    <% } %>
+
+    <div class="card">
+
+      <form
+        action="/api/productos"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+
+        <!-- Nombre -->
+
+        <div class="form-group">
+
+          <label for="nombre">
+            Nombre
+          </label>
+
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Ej: Laptop Gamer"
+            value="<%= datos?.nombre || '' %>"
+            required
+          >
+
         </div>
-        <% } %>
 
-          <div class="card">
-            <form action="/api/productos" method="POST">
+        <!-- Descripción -->
 
-              <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ej: Laptop Pro 15"
-                  value="<%= typeof datos !== 'undefined' ? datos.nombre : '' %>" required>
-              </div>
+        <div class="form-group">
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="precio">Precio ($)</label>
-                  <input type="number" id="precio" name="precio" placeholder="0.00" step="0.01" min="0"
-                    value="<%= typeof datos !== 'undefined' ? datos.precio : '' %>" required>
-                </div>
-                <div class="form-group">
-                  <label for="stock">Stock</label>
-                  <input type="number" id="stock" name="stock" placeholder="0" min="0"
-                    value="<%= typeof datos !== 'undefined' ? datos.stock : '' %>" required>
-                </div>
-              </div>
+          <label for="descripcion">
+            Descripción
+          </label>
 
-              <div class="form-group">
-                <label for="categoria">Categoría</label>
-                <select id="categoria" name="categoria" required>
-                  <option value="" disabled selected>Selecciona una categoría</option>
-                  <option value="electronica">Electrónica</option>
-                  <option value="perifericos">Periféricos</option>
-                  <option value="monitores">Monitores</option>
-                  <option value="audio">Audio</option>
-                </select>
-              </div>
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            rows="4"
+            placeholder="Describe el producto..."
+            required
+          ><%= datos?.descripcion || '' %></textarea>
 
-              <div class="form-actions">
-                <button type="submit" class="btn btn-success">💾 Guardar Producto</button>
-                <a href="/api/productos" class="btn btn-secondary">Cancelar</a>
-              </div>
+        </div>
 
-            </form>
+        <!-- Precio y Stock -->
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label for="precio">
+              Precio ($)
+            </label>
+
+            <input
+              type="number"
+              id="precio"
+              name="precio"
+              placeholder="0.00"
+              step="0.01"
+              min="0"
+              value="<%= datos?.precio || '' %>"
+              required
+            >
+
           </div>
+
+          <div class="form-group">
+
+            <label for="stock">
+              Stock
+            </label>
+
+            <input
+              type="number"
+              id="stock"
+              name="stock"
+              placeholder="0"
+              min="0"
+              value="<%= datos?.stock || '' %>"
+              required
+            >
+
+          </div>
+
+        </div>
+
+        <!-- Categoría -->
+
+        <div class="form-group">
+
+          <label for="categoria">
+            Categoría
+          </label>
+
+          <select
+            id="categoria"
+            name="categoria"
+            required
+          >
+
+            <option value="">
+              Selecciona una categoría
+            </option>
+
+            <option value="laptops">
+              Laptops
+            </option>
+
+            <option value="monitores">
+              Monitores
+            </option>
+
+            <option value="audio">
+              Audio
+            </option>
+
+            <option value="perifericos">
+              Periféricos
+            </option>
+
+            <option value="gaming">
+              Gaming
+            </option>
+
+             <option value="smartphones">
+              Smartphones
+            </option>
+
+          </select>
+
+        </div>
+
+        <!-- Imagen -->
+
+        <div class="form-group">
+
+          <label for="imagen">
+            Imagen del producto
+          </label>
+
+          <input
+            type="file"
+            id="imagen"
+            name="imagen"
+            accept=".png,.jpg,.jpeg,.webp"
+          >
+
+        </div>
+
+        <!-- Botones -->
+
+        <div class="form-actions">
+
+          <button
+            type="submit"
+            class="btn btn-success"
+          >
+            💾 Guardar Producto
+          </button>
+
+          <a
+            href="/api/productos"
+            class="btn btn-secondary"
+          >
+            Cancelar
+          </a>
+
+        </div>
+
+      </form>
+
     </div>
+
+  </div>
 
 </body>
 

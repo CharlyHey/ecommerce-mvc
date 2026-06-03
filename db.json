@@ -2,38 +2,68 @@
   "productos": [
     {
       "id": 1,
-      "nombre": "Laptop Pro 15",
-      "precio": 24999.99,
-      "categoria": "electronica",
-      "stock": 30
+      "nombre": "iPhone 17e",
+      "descripcion": "El iPhone más barato y completo de Apple.",
+      "precio": 19898.99,
+      "stock": 21,
+      "categoria": "smartphones",
+      "imagen": "/uploads/1780042568085.jpg",
+      "createdAt": "2026-05-29T08:16:08.087Z"
+    },
+    {
+      "id": 2,
+      "nombre": "iPhone 17e",
+      "descripcion": "El iPhone más potente de Apple.",
+      "precio": 18599,
+      "stock": 0,
+      "categoria": "smartphones",
+      "imagen": "/uploads/1780042692742.jpg",
+      "createdAt": "2026-05-29T08:18:12.745Z"
+    }
+  ],
+  "pedidos": [
+    {
+      "id": 1,
+      "fecha": "29/05/2026, 2:08:36 am",
+      "productos": [
+        {
+          "id": 1,
+          "nombre": "Dell XPS 13 Ultra",
+          "precio": 34250,
+          "imagen": "/uploads/1780038186589.jpg",
+          "cantidad": 1
+        }
+      ],
+      "total": 34250
+    },
+    {
+      "id": 2,
+      "fecha": "29/05/2026, 2:17:26 am",
+      "productos": [
+        {
+          "id": 1,
+          "nombre": "iPhone 17e",
+          "precio": 19898.99,
+          "imagen": "/uploads/1780042568085.jpg",
+          "cantidad": 1
+        }
+      ],
+      "total": 19898.99
     },
     {
       "id": 3,
-      "nombre": "Monitor 4K 27",
-      "precio": 8500,
-      "categoria": "monitores",
-      "stock": 11
-    },
-    {
-      "id": 4,
-      "nombre": "Mouse Inalámbrico",
-      "precio": 650.5,
-      "categoria": "perifericos",
-      "stock": 60
-    },
-    {
-      "id": 5,
-      "nombre": "Auriculares Noise Cancel",
-      "precio": 3200,
-      "categoria": "audio",
-      "stock": 20
-    },
-    {
-      "id": 5,
-      "nombre": "Lenovo 8GB",
-      "precio": 5423.98,
-      "categoria": "electronica",
-      "stock": 23
+      "fecha": "29/05/2026, 2:18:21 am",
+      "productos": [
+        {
+          "id": 2,
+          "nombre": "iPhone 17e",
+          "precio": 18599,
+          "imagen": "/uploads/1780042692742.jpg",
+          "cantidad": 1
+        }
+      ],
+      "total": 18599
     }
-  ]
+  ],
+  "usuarios": []
 }

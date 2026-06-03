@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <%- include('partials/head') %>
+
+  <title>
+    Historial de Pedidos
+  </title>
+
+</head>
+
+<body>
+
+  <%- include('partials/navbar') %>
+
+  <div class="container">
+
+    <h1 class="page-title">
+
+      📦 Historial de Pedidos
+
+    </h1>
+
+    <!-- Mensaje -->
+
+    <% if (typeof mensaje !== 'undefined' && mensaje) { %>
+
+      <div class="alert alert-success">
+
+        <%= mensaje %>
+
+      </div>
+
+    <% } %>
+
+    <!-- Sin pedidos -->
+
+    <% if (pedidos.length === 0) { %>
+
+      <div class="card">
+
+        <p>
+          No hay pedidos registrados.
+        </p>
+
+      </div>
+
+    <% } else { %>
+
+      <% pedidos.forEach(pedido => { %>
+
+        <div
+          class="card"
+          style="margin-bottom: 25px;"
+        >
+
+          <h2>
+
+            Pedido #<%= pedido.id %>
+
+          </h2>
+
+          <p>
+
+            Fecha:
+            <strong>
+
+              <%= pedido.fecha %>
+
+            </strong>
+
+          </p>
+
+          <br>
+
+          <!-- Productos -->
+
+          <% pedido.productos.forEach(item => { %>
+
+            <div
+              style="
+                display:flex;
+                justify-content:space-between;
+                margin-bottom:10px;
+              "
+            >
+
+              <div>
+
+                <strong>
+                  <%= item.nombre %>
+                </strong>
+
+                x <%= item.cantidad %>
+
+              </div>
+
+              <div>
+
+                $
+                <%= (
+                  item.precio * item.cantidad
+                ).toLocaleString('es-MX') %>
+
+              </div>
+
+            </div>
+
+          <% }) %>
+
+          <hr style="margin: 15px 0;">
+
+          <h3>
+
+            Total:
+
+            <span class="product-price">
+
+              $
+              <%= pedido.total.toLocaleString('es-MX') %>
+
+            </span>
+
+          </h3>
+
+        </div>
+
+      <% }) %>
+
+    <% } %>
+
+  </div>
+
+</body>
+
+</html>

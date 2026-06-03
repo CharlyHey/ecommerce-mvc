@@ -2,68 +2,195 @@
 <html lang="es">
 
 <head>
+
   <%- include('partials/head') %>
-    <title>Productos</title>
+
+  <title>Catálogo de Productos</title>
+
 </head>
 
 <body>
 
   <%- include('partials/navbar') %>
 
-    <div class="container">
-      <h1 class="page-title">Listado de Productos</h1>
+  <div class="container">
 
-      <% if (typeof mensaje !=='undefined' ) { %>
-        <div class="alert alert-success">
-          <%= mensaje %>
-        </div>
-        <% } %>
+    <h1 class="page-title">
+      Catálogo de Productos
+    </h1>
 
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Nombre</th>
-                  <th>Categoría</th>
-                  <th>Precio</th>
-                  <th>Stock</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% productos.forEach(p=> { %>
-                  <tr>
-                    <td><strong>
-                        <%= p.id %>
-                      </strong></td>
-                    <td>
-                      <%= p.nombre %>
-                    </td>
-                    <td><span class="badge <%= p.categoria %>">
-                        <%= p.categoria %>
-                      </span></td>
-                    <td class="price">$<%= p.precio?.toLocaleString('es-MX') %>
-                    </td>
-                    <td class="<%= p.stock < 10 ? 'stock-low' : '' %>">
-                      <%= p.stock %>
-                    </td>
-                    <td>
-                      <div class="actions">
-                        <a href="/api/productos/<%= p.id %>" class="btn btn-secondary">Ver</a>
-                        <a href="/api/productos/<%= p.id %>/editar" class="btn btn-edit">Editar</a>
-                        <form action="/api/productos/<%= p.id %>?_method=DELETE" method="POST"
-                          onsubmit="return confirm('¿Eliminar este producto?')">
-                          <button type="submit" class="btn btn-delete">Eliminar</button>
-                        </form>
-                      </div>
-                    </td>
-                  </tr>
-                  <% }) %>
-              </tbody>
-            </table>
+    <!-- Mensajes -->
+
+    <% if (typeof mensaje !== 'undefined' && mensaje) { %>
+
+      <div class="alert alert-success">
+        <%= mensaje %>
+      </div>
+
+    <% } %>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+
+      <div class="alert alert-error">
+        <%= error %>
+      </div>
+
+    <% } %>
+
+    <!-- Productos -->
+
+    <div class="products-grid">
+
+      <% if (productos.length === 0) { %>
+
+        <p>
+          No hay productos registrados.
+        </p>
+
+      <% } %>
+
+      <% productos.forEach(p => { %>
+
+        <div class="product-card">
+
+          <!-- Imagen -->
+
+          <div class="product-image">
+
+            <% if (p.imagen) { %>
+
+              <img
+                src="<%= p.imagen %>"
+                alt="<%= p.nombre %>"
+              >
+
+            <% } else { %>
+
+              <img
+                src="https://via.placeholder.com/300x200"
+                alt="Sin imagen"
+              >
+
+            <% } %>
+
           </div>
+
+          <!-- Información -->
+
+          <div class="product-info">
+
+            <h2>
+              <%= p.nombre %>
+            </h2>
+
+            <p class="product-category">
+              <%= p.categoria %>
+            </p>
+
+            <p class="product-description">
+              <%= p.descripcion %>
+            </p>
+
+            <p class="product-price">
+              $
+              <%= p.precio?.toLocaleString('es-MX') %>
+            </p>
+
+            <p class="
+              product-stock
+              <%= p.stock < 5 ? 'stock-low' : '' %>
+            ">
+
+              Stock:
+              <%= p.stock %>
+
+            </p>
+
+            <!-- Botones -->
+
+          <div class="actions">
+
+            <!-- Ver -->
+
+            <a
+            href="/api/productos/<%= p.id %>"
+            class="btn btn-secondary"
+            >
+              Ver
+            </a>
+
+            <!-- Agregar carrito -->
+
+            <% if (p.stock > 0) { %>
+
+            <form
+            action="/carrito/agregar/<%= p.id %>"
+            method="POST"
+            >
+
+            <button
+            type="submit"
+            class="btn btn-success"
+            >
+
+              🛒 Agregar
+
+            </button>
+
+            </form>
+
+            <% } else { %>
+
+            <button
+              class="btn btn-delete"
+              disabled
+            >
+
+              Agotado
+
+            </button>
+
+            <% } %>
+
+            <!-- Editar -->
+
+            <a
+            href="/api/productos/<%= p.id %>/editar"
+            class="btn btn-edit"
+            >
+              Editar
+            </a>
+
+            <!-- Eliminar -->
+
+            <form
+            action="/api/productos/<%= p.id %>?_method=DELETE"
+            method="POST"
+            onsubmit="return confirm('¿Eliminar producto?')"
+            >
+
+            <button
+            type="submit"
+            class="btn btn-delete"
+            >
+
+              Eliminar
+
+            </button>
+
+            </form>
+
+          </div>
+
+          </div>
+
+        </div>
+
+      <% }) %>
+
     </div>
+
+  </div>
 
 </body>
 

@@ -1,48 +1,156 @@
 import express from 'express';
-import methodOverride from 'method-override'
-import { fileURLToPath } from 'node:url'
-import { dirname, join } from 'node:path'
-import productodRoutes from './Routes/productos.routes.js'
+import session from 'express-session';
+import methodOverride from 'method-override';
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+import productosRoutes from './Routes/productos.routes.js';
+
+import carritoRoutes
+from './Routes/carrito.routes.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
-// ── Motor de vistas ────────────────────────────────
-app.set('view engine', 'ejs') // Indicamos a Express qué motor de plantillas usar (ejs)
-app.set('views', join(__dirname, 'views')) // Define la carpeta donde Express buscará las vistas
+// ─────────────────────────────────────
+// CONFIGURACIÓN
+// ─────────────────────────────────────
 
-// ── Archivos estáticos ─────────────────────────────
-app.use(express.static(join(__dirname, 'public'))) // Monta la carpeta public/ como servidor de archivos estáticos. 
-// Todo lo que esté aquí (CSS, imágenes, JS del cliente) queda accesible directamente desde el navegador. 
+const PORT = process.env.PORT || 3000;
 
-// ── Middlewares ────────────────────────────────────
-app.use(express.urlencoded({ extended: true })) // Parsea el body de los formularios HTML 
-// Sin esto, req.body llega vacío y no se pueden leer los campos del formulario. 
-// extended: true permite valores anidados como objetos o arrays.
-app.use(express.json()) // Parsea body en formato JSON
+// ─────────────────────────────────────
+// MOTOR DE VISTAS
+// ─────────────────────────────────────
 
-// ── Method Override (PUT/DELETE desde forms HTML) ──
-// Soporta ?_method=PUT en la query string
-app.use(methodOverride((req) => {
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    return req.body._method
+app.set('view engine', 'ejs');
+
+app.set(
+  'views',
+  join(__dirname, 'views')
+);
+
+// ─────────────────────────────────────
+// ARCHIVOS ESTÁTICOS
+// ─────────────────────────────────────
+
+app.use(
+  express.static(
+    join(__dirname, 'public')
+  )
+);
+
+// ─────────────────────────────────────
+// MIDDLEWARES
+// ─────────────────────────────────────
+
+// Formularios HTML
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+);
+
+// JSON
+app.use(express.json());
+
+// ─────────────────────────────────────
+// SESIONES
+// ─────────────────────────────────────
+
+app.use(session({
+
+  secret: 'ecommerce_secret_key',
+
+  resave: false,
+
+  saveUninitialized: true,
+
+  cookie: {
+    secure: false,
+    maxAge: 1000 * 60 * 60
   }
-  return req.query._method
-}))
-// methodOverride: Resuelve una limitación del HTML: los formularios solo soportan GET y POST, nunca PUT ni DELETE. 
-// Este middleware inspecciona cada petición entrante y, si encuentra un campo _method, sustituye el método real de 
-// la petición por ese valor antes de que llegue al router.
+}));
 
-// ── Rutas ──────────────────────────────────────────
-app.use('/api/productos', productodRoutes)
+// ─────────────────────────────────────
+// CARRITO GLOBAL EN SESIÓN
+// ─────────────────────────────────────
 
-// ── Ruta raíz → redirige al listado ───────────────
-app.get('/', (_, res) => res.redirect('/api/productos'))
+app.use((req, res, next) => {
 
-const PORT = process.env.PORT || 3000
+  if (!req.session.carrito) {
+    req.session.carrito = [];
+  }
+
+  // Disponible en todas las vistas
+  res.locals.carrito =
+    req.session.carrito;
+
+  next();
+});
+
+// ─────────────────────────────────────
+// METHOD OVERRIDE
+// ─────────────────────────────────────
+
+app.use(methodOverride((req) => {
+
+  if (
+    req.body &&
+    typeof req.body === 'object' &&
+    '_method' in req.body
+  ) {
+    return req.body._method;
+  }
+
+  return req.query._method;
+}));
+
+// ─────────────────────────────────────
+// RUTAS
+// ─────────────────────────────────────
+
+app.use(
+  '/api/productos',
+  productosRoutes
+);
+
+app.use(
+  '/carrito',
+  carritoRoutes
+);
+
+// ─────────────────────────────────────
+// HOME
+// ─────────────────────────────────────
+
+app.get('/', (_, res) => {
+
+  res.redirect('/api/productos');
+});
+
+// ─────────────────────────────────────
+// MANEJO DE ERRORES
+// ─────────────────────────────────────
+
+app.use((err, req, res, next) => {
+
+  console.error(err.stack);
+
+  res.status(500).send(
+    'Error interno del servidor'
+  );
+});
+
+// ─────────────────────────────────────
+// SERVIDOR
+// ─────────────────────────────────────
 
 app.listen(PORT, () => {
-  console.log(`Servidor en http://localhost:${PORT}`);
+
+  console.log(
+    `Servidor en http://localhost:${PORT}`
+  );
 });
