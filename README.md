@@ -44,6 +44,8 @@ El sistema permite administrar productos, gestionar un carrito de compras y simu
 
 * Compatible con dispositivos móviles
 * Interfaz adaptable
+* Modo oscuro 
+
 
 ---
 
@@ -54,9 +56,9 @@ El proyecto utiliza arquitectura MVC:
 ```txt
 Models/        → Lógica y acceso a datos
 Views/         → Vistas EJS
-Controllers/   → Lógica de negocio
+Controllers/   → Ejecución de lógica de negocio
 Routes/        → Definición de rutas
-Middleware/    → Middlewares personalizados
+Middleware/    → Middlewares personalizados (multer)
 public/        → CSS, imágenes y archivos estáticos
 ```
 
@@ -70,6 +72,7 @@ public/        → CSS, imágenes y archivos estáticos
 * Express-session
 * Multer
 * Method-override
+* HTML
 * CSS3
 * JavaScript
 
@@ -173,7 +176,9 @@ pnpm start
 # 👨‍💻 Autor
 
 Buitron Arreola Juan Carlos
-
+García López Mauricio
+Hernández Torres Diana
+Suriano Granados Duncan Zuriel
 ---
 
 # 📄 Licencia

@@ -13,7 +13,7 @@
     "mvc",
     "ecommerce"
   ],
-  "author": "Buitron Arreola Juan Carlos",
+  "author": "Buitron Arreola Juan Carlos, García López Mauricio, Hernández Torres Diana, Suriano Granados Duncan Zuriel",
   "license": "MIT",
   "type": "module",
   "dependencies": {

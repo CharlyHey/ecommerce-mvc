@@ -1,16 +1,6 @@
 {
   "productos": [
     {
-      "id": 1,
-      "nombre": "iPhone 17e",
-      "descripcion": "El iPhone más barato y completo de Apple.",
-      "precio": 19898.99,
-      "stock": 21,
-      "categoria": "smartphones",
-      "imagen": "/uploads/1780042568085.jpg",
-      "createdAt": "2026-05-29T08:16:08.087Z"
-    },
-    {
       "id": 2,
       "nombre": "iPhone 17e",
       "descripcion": "El iPhone más potente de Apple.",
@@ -19,6 +9,16 @@
       "categoria": "smartphones",
       "imagen": "/uploads/1780042692742.jpg",
       "createdAt": "2026-05-29T08:18:12.745Z"
+    },
+    {
+      "id": 3,
+      "nombre": "Nintendo Switch 2 ",
+      "descripcion": "La nueva consola de Nintendo.",
+      "precio": 9999,
+      "stock": 10,
+      "categoria": "gaming",
+      "imagen": "/uploads/1780804981008.jpg",
+      "createdAt": "2026-06-07T04:03:01.030Z"
     }
   ],
   "pedidos": [
@@ -63,6 +63,20 @@
         }
       ],
       "total": 18599
+    },
+    {
+      "id": 4,
+      "fecha": "06/06/2026, 10:00:59 pm",
+      "productos": [
+        {
+          "id": 1,
+          "nombre": "iPhone 17e",
+          "precio": 19898.99,
+          "imagen": "/uploads/1780042568085.jpg",
+          "cantidad": 1
+        }
+      ],
+      "total": 19898.99
     }
   ],
   "usuarios": []
